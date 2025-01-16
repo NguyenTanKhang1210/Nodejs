@@ -187,6 +187,168 @@ ORDER BY COUNT(u.user_id) DESC
 LIMIT 5
 
 
+-- câu 2: tìm 2 nhà hàng có lượt like nhiều nhất
+SELECT COUNT(res.res_id) AS 'Lượt like', res.res_name 
+FROM restaurant AS res
+JOIN like_res AS lr ON lr.res_id=res.res_id
+GROUP BY res.res_name
+ORDER BY COUNT(res.res_id) DESC
+LIMIT 2
+
+-- tạo table rate_res, food_type
+
+
+
+CREATE TABLE rate_res (
+    rate_res_id INT AUTO_INCREMENT PRIMARY KEY ,
+    user_id INT,
+    FOREIGN KEY(user_id) REFERENCES users(user_id),
+    
+    res_id INT,
+    FOREIGN KEY(res_id) REFERENCES restaurant(res_id),
+    amount INT,
+    date_rate DATE
+)
+
+INSERT INTO rate_res (user_id, res_id, amount, date_rate) VALUES
+(1, 1, 5, '2025-01-01'),
+(2, 2, 4, '2025-01-02'),
+(3, 3, 3, '2025-01-03'),
+(4, 4, 5, '2025-01-04'),
+(5, 5, 2, '2025-01-05'),
+(6, 6, 4, '2025-01-06'),
+(7, 7, 5, '2025-01-07'),
+(8, 8, 3, '2025-01-08'),
+(9, 9, 4, '2025-01-09'),
+(10, 10, 5, '2025-01-10'),
+(11, 11, 2, '2025-01-11'),
+(12, 12, 5, '2025-01-12'),
+(13, 13, 3, '2025-01-13'),
+(14, 14, 4, '2025-01-14'),
+(15, 15, 1, '2025-01-15'),
+(16, 16, 5, '2025-01-16'),
+(17, 17, 4, '2025-01-17'),
+(18, 18, 3, '2025-01-18'),
+(19, 19, 4, '2025-01-19'),
+(20, 20, 5, '2025-01-20');
+
+
+-- tạo table food_type
+create table food_type (
+    type_id INT PRIMARY KEY AUTO_INCREMENT,
+    type_name VARCHAR(255)
+)
+INSERT INTO food_type (type_name) VALUES
+('Italian'),
+('Chinese'),
+('Indian'),
+('Vietnamese'),
+('Mexican'),
+('Japanese'),
+('Korean'),
+('Thai'),
+('American'),
+('French'),
+('Mediterranean'),
+('Spanish'),
+('Greek'),
+('Turkish'),
+('Moroccan'),
+('Lebanese'),
+('Brazilian'),
+('Cuban'),
+('German'),
+('Caribbean');
+
+-- tạo table food
+create table food (
+    food_id INT PRIMARY KEY AUTO_INCREMENT,
+    food_name VARCHAR(255),
+    price DOUBLE,
+    image VARCHAR(255),
+    description TEXT,
+    type_id INT,
+    FOREIGN KEY (type_id) REFERENCES food_type(type_id)
+);
+
+INSERT INTO food (food_name, price, image, description, type_id) VALUES
+('Margherita Pizza', 9.99, 'margherita.jpg', 'Classic Italian pizza with tomato, mozzarella, and basil.', 1),
+('Kung Pao Chicken', 12.50, 'kungpao.jpg', 'Spicy stir-fried chicken with peanuts and vegetables.', 2),
+('Butter Chicken', 13.00, 'butterchicken.jpg', 'Indian chicken curry with creamy tomato sauce.', 3),
+('Pho', 8.50, 'pho.jpg', 'Vietnamese noodle soup with beef or chicken.', 4),
+('Tacos', 7.99, 'tacos.jpg', 'Mexican tortilla filled with meat, cheese, and vegetables.', 5),
+('Sushi Platter', 18.00, 'sushi.jpg', 'Assorted Japanese sushi with fresh fish and rice.', 6),
+('Bibimbap', 10.50, 'bibimbap.jpg', 'Korean mixed rice with vegetables, meat, and egg.', 7),
+('Pad Thai', 9.00, 'padthai.jpg', 'Thai stir-fried rice noodles with shrimp and peanuts.', 8),
+('Cheeseburger', 8.99, 'cheeseburger.jpg', 'Classic American burger with cheese, lettuce, and tomato.', 9),
+('Croissant', 2.50, 'croissant.jpg', 'French buttery, flaky pastry.', 10),
+('Hummus', 4.99, 'hummus.jpg', 'Mediterranean dip made from chickpeas and tahini.', 11),
+('Paella', 15.00, 'paella.jpg', 'Spanish rice dish with seafood and saffron.', 12),
+('Greek Salad', 6.50, 'greeksalad.jpg', 'Salad with feta cheese, olives, and vegetables.', 13),
+('Kebab', 8.00, 'kebab.jpg', 'Turkish skewered meat grilled to perfection.', 14),
+('Tagine', 12.00, 'tagine.jpg', 'Moroccan slow-cooked stew with meat and vegetables.', 15),
+('Baklava', 5.50, 'baklava.jpg', 'Lebanese dessert with layers of pastry, nuts, and syrup.', 16),
+('Feijoada', 13.50, 'feijoada.jpg', 'Brazilian stew with black beans and pork.', 17),
+('Ropa Vieja', 14.00, 'ropavieja.jpg', 'Cuban shredded beef with vegetables.', 18),
+('Schnitzel', 11.99, 'schnitzel.jpg', 'German breaded and fried meat cutlet.', 19),
+('Jerk Chicken', 12.00, 'jerkchicken.jpg', 'Caribbean spicy grilled chicken.', 20);
+
+
+-- orders
+CREATE TABLE orders(
+	order_id INT PRIMARY KEY AUTO_INCREMENT,
+	
+	user_id INT,
+	FOREIGN KEY(user_id) REFERENCES users(user_id),
+	
+	food_id INT,
+	FOREIGN KEY(food_id) REFERENCES food(food_id),
+	amount INT,
+	code VARCHAR(10),
+	arr_sub_id VARCHAR(255)
+)
+INSERT INTO orders (user_id, food_id, amount, code, arr_sub_id)
+VALUES
+    (1, 3, 2, 'CODE001', 'SUB001'),
+    (2, 5, 1, 'CODE002', 'SUB002'),
+    (3, 2, 4, 'CODE003', 'SUB003'),
+    (4, 7, 3, 'CODE004', 'SUB004'),
+    (5, 4, 2, 'CODE005', 'SUB005'),
+    (6, 1, 1, 'CODE006', 'SUB006'),
+    (7, 6, 2, 'CODE007', 'SUB007'),
+    (8, 3, 3, 'CODE008', 'SUB008'),
+    (9, 8, 1, 'CODE009', 'SUB009'),
+    (10, 5, 2, 'CODE010', 'SUB010'),
+    (1, 2, 3, 'CODE011', 'SUB011'),
+    (2, 4, 1, 'CODE012', 'SUB012'),
+    (3, 6, 2, 'CODE013', 'SUB013'),
+    (4, 8, 4, 'CODE014', 'SUB014'),
+    (5, 1, 3, 'CODE015', 'SUB015'),
+    (6, 5, 1, 'CODE016', 'SUB016'),
+    (7, 7, 2, 'CODE017', 'SUB017'),
+    (8, 3, 3, 'CODE018', 'SUB018'),
+    (9, 2, 4, 'CODE019', 'SUB019'),
+    (10, 6, 1, 'CODE020', 'SUB020');
+
+-- Câu 3: Tìm người đặt nhà hàng nhiều nhất
+-- kết table users và orders
+SELECT COUNT(u.user_id) AS 'lượt order', u.full_name 
+FROM users AS u 
+JOIN orders AS o 
+ON o.user_id = u.user_id 
+GROUP BY u.full_name 
+ORDER BY COUNT(u.user_id) DESC 
+LIMIT 1
+
+-- Câu 4: Tìm người không hoạt động
+-- (tìm user không like nhà hàng, không đánh giá nhà hàng, không order)
+SELECT * FROM users AS u
+LEFT JOIN like_res AS lr ON u.user_id = lr.user_id
+LEFT JOIN rate_res AS rr ON rr.user_id = u.user_id
+LEFT JOIN orders AS o ON o.user_id = u.user_id
+WHERE lr.user_id IS NULL 
+AND rr.user_id IS NULL 
+AND o.user_id IS NULL;
 
 
 
