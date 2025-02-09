@@ -5,6 +5,7 @@ import express from "express";
 // lưu ý:khi import 1 file thì cần ghi đuôi .js
 import userRoutes from "./userRoutes.js";
 import videoRoutes from "./videoRoutes.js";
+import authRoutes from "./authRoutes.js";
 
 const rootRoutes = express.Router();
 
@@ -12,5 +13,6 @@ const rootRoutes = express.Router();
 // http://localhost:3000/users/....
 rootRoutes.use("/users", userRoutes);
 rootRoutes.use("/videos", videoRoutes);
+rootRoutes.use("/auth", authRoutes);
 
 export default rootRoutes;

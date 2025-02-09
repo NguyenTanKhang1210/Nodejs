@@ -2,9 +2,16 @@
 import express from "express";
 import connect from "./db.js";
 import rootRoutes from "./src/routes/rootRoutes.js";
+import cors from "cors"; // lib giúp cho BE có thể giao tiếp với FE
 
 // khởi tạo ứng dụng express
 const app = express();
+
+// sử dụng cors
+app.use(cors());
+
+// expose hình, video ra ngoài internet
+app.use(express.static("."));
 
 // parse body từ string => JSON
 app.use(express.json());
