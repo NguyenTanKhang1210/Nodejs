@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Cấu hình axios
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: import.meta.env.VITE_BE_URL,
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
@@ -12,7 +12,7 @@ const apiClient = axios.create({
 // Interceptor (nếu cần, thêm token vào header)
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

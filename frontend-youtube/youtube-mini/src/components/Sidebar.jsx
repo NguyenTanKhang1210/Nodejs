@@ -6,9 +6,13 @@ import { getVideoTypes } from "../api/videoService";
 const Sidebar = () => {
   const { isSmallSidebar } = useSidebar();
   const [shortcutLinks, setShortcutLinks] = useState([]);
+  console.log("shortcutLinks: ", shortcutLinks);
 
   useEffect(() => {
     getVideoTypes().then((data) => {
+      console.log(import.meta.env.VITE_BE_URL);
+      console.log("data: ", data);
+
       setShortcutLinks(data);
     });
   }, []);
@@ -25,7 +29,7 @@ const Sidebar = () => {
     <div className={`sidebar ${isSmallSidebar ? "small-sidebar" : ""}`}>
       <div className="shortcut-links">
         {shortcutLinks.map((link, index) => (
-          <a href='#' key={index}>
+          <a href="#" key={index}>
             <img src={`/src/assets/${link.icon}`} alt={link.item_name} />
             <p>{link.item_name}</p>
           </a>
