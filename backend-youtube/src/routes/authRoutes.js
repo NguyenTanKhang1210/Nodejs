@@ -1,5 +1,11 @@
 import express from "express";
-import { login, register } from "../controllers/authController.js";
+import {
+  forgotPassword,
+  login,
+  loginFacebook,
+  register,
+  resetPassword,
+} from "../controllers/authController.js";
 
 const authRoutes = express.Router();
 
@@ -7,5 +13,14 @@ const authRoutes = express.Router();
 authRoutes.post("/register", register);
 // Đăng nhập
 authRoutes.post("/login", login);
+
+// forgot password
+authRoutes.post("/forgot-password", forgotPassword);
+
+// reset password
+authRoutes.post("/reset-password", resetPassword);
+
+// login facebook
+authRoutes.post("/login-facebook", loginFacebook);
 
 export default authRoutes;
