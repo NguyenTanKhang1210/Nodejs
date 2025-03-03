@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  extendToken,
   forgotPassword,
   login,
   loginFacebook,
@@ -22,5 +23,7 @@ authRoutes.post("/reset-password", resetPassword);
 
 // login facebook
 authRoutes.post("/login-facebook", loginFacebook);
+
+authRoutes.post("/extend-token", extendToken);
 
 export default authRoutes;

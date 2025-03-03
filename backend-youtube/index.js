@@ -3,12 +3,22 @@ import express from "express";
 import connect from "./db.js";
 import rootRoutes from "./src/routes/rootRoutes.js";
 import cors from "cors"; // lib giúp cho BE có thể giao tiếp với FE
+import cookieParser from "cookie-parser";
 
 // khởi tạo ứng dụng express
 const app = express();
 
 // sử dụng cors
-app.use(cors());
+// config cors để BE lấy dc refesh token từ FE
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
+// thêm middleware để get info cookie từ FE hoặc postman
+app.use(cookieParser());
 
 // expose hình, video ra ngoài internet
 app.use(express.static("."));
@@ -121,3 +131,13 @@ const port = 3000;
 app.listen(port, () => {
   console.log(`BE is running with port ${port}`);
 });
+
+// npx sequelize-auto -h localhost -d node48_youtube -u root -x 123456 -p 3307 --dialect mysql -o src/models -l esm
+
+// setting Prisma
+// B1: npx prisma init
+// B2: update file schema.prisma và .env
+// B3: pull các table từ db về
+//      npx prisma db pull
+// B4: tạo prisma client để thao tác với db
+//      npx prisma generate

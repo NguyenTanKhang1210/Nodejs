@@ -4,7 +4,9 @@ export const login = async (payload) => {
   //payload: email, pass_word
   try {
     console.log("payload login: ", payload);
-    const response = await apiClient.post("/auth/login", payload);
+    const response = await apiClient.post("/auth/login", payload, {
+      withCredentials: true, // setting để FE nhận được cookie từ BE
+    });
     console.log("response login: ", response.data);
     return response.data;
   } catch (error) {

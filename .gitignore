@@ -1,3 +1,4 @@
 backend-youtube/.env
 backend-youtube/node_modules
+backend-socketio/node_modules
 frontend-youtube/youtube-mini/node_modules
