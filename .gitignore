@@ -1,4 +1,10 @@
 backend-youtube/.env
 backend-youtube/node_modules
 backend-socketio/node_modules
+backend-socketio/.env
 frontend-youtube/youtube-mini/node_modules
+backend-nestjs/node_modules
+backend-nestjs/.env
+backend-graphql/node_modules
+backend-graphql/.env
+frontend-nestjs/dist
